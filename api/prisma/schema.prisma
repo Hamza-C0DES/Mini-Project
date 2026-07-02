@@ -14,4 +14,12 @@ datasource db {
   provider = "postgresql"
 }
 
+// Working On Schema //
+model game{
+  id Int @id @default(autoincrement())
+  username String 
+  roomcode String
+  answer String
+}
+
 // TODO: add your models below (for example, a Game and its Answers).
