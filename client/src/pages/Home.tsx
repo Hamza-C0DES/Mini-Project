@@ -26,11 +26,11 @@ import { useForm } from "react-hook-form";
 // }
 
 const Home: React.FC = () => {
-    const mutation = useMutation({
-    mutationFn: (newTodo) => {
-      return fetch("/games")
-      //return axios.post('/todos', newTodo)
+  const mutation = useMutation({
+    mutationFn: ()=>{
+      return fetch("http://localhost:3000/games");
     },
+
   })
 
 
@@ -60,7 +60,7 @@ const Home: React.FC = () => {
       <IonContent fullscreen>
         <form onSubmit={handleSubmit(onSubmit)}>
           <IonInput 
-          label="Room Code" 
+          label="Room Code:" 
           {...register("roomCode", {required: "Please enter a room code."})}
           type='number'
           fill='outline'
@@ -68,14 +68,14 @@ const Home: React.FC = () => {
           <p>{errors.roomCode?.message}</p>
 
           <IonInput 
-          label="User"
+          label="User:"
           {...register("userName", {required: "Enter a user name."})}
           fill='outline'
           />
           <p>{errors.userName?.message}</p>
 
           <IonInput 
-          label="Celebrity Name" 
+          label="Celebrity Name:" 
           {...register("celebName", {required: "Please enter celebrity"})}
           fill='outline'
           />
