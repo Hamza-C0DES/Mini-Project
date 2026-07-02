@@ -1,6 +1,6 @@
 import "dotenv/config";
 import express from "express";
-
+const prisma = require("./prisma");
 const app = express();
 app.use(express.json());
 
@@ -23,3 +23,9 @@ app.get("/health", (_req, res) => {
 app.listen(PORT, () => {
   console.log(`API listening on http://localhost:${PORT}`);
 });
+
+app.get("/games", async (req, res)=>{
+  //dont have a db yet, or a schema
+  //const games = await prisma.game.findMany()
+});
+
