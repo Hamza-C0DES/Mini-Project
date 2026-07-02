@@ -26,7 +26,6 @@ app.listen(PORT, () => {
 });
 
 app.get("/", (req, res) => {
-  // Not Loading Anything //
   res.send("Hello World");
   console.log("Hello World") // Working //
 })
