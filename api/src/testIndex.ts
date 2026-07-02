@@ -24,8 +24,8 @@ app.listen(PORT, () => {
   console.log(`API listening on http://localhost:${PORT}`);
 });
 
-app.post("/game", (req, res) => {
-    const {roomCode, username, answer} = req.body;
-    console.log(roomCode, username, answer);
-    res.status(201).json({roomCode, username, answer});
+app.post("/game/", (req, res) => {
+    const {roomCode, celebrity} = req.body;
+    console.log(roomCode, celebrity);
+    res.status(201).json({roomCode, celebrity});
 })
