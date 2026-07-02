@@ -2,9 +2,11 @@ import "dotenv/config";
 import express from "express";
 const app = express();
 
-import { PrismaClient } from "@prisma/client/extension";
+import { PrismaClient } from './generated/prisma/client.js';
+import { PrismaPg } from '@prisma/adapter-pg';
 
-const prisma = new PrismaClient();
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
+const prisma = new PrismaClient({ adapter })
 
 app.use(express.json());
 
@@ -32,6 +34,7 @@ app.listen(PORT, () => {
 app.get("/games", async (req, res)=>{
   //dont have a db yet, or a schema
   //const games = await prisma.game.findMany()
+  res.json(await prisma.game.findMany());
 });
 
 app.get("/", (req, res) => {
