@@ -26,12 +26,12 @@ import { useForm } from "react-hook-form";
 // }
 
 const Home: React.FC = () => {
-    const mutation = useMutation({
-    mutationFn: (newTodo) => {
-      return fetch("/games")
-      //return axios.post('/todos', newTodo)
-    },
-  })
+  //   const mutation = useMutation({
+  //   mutationFn: (newTodo) => {
+  //     return fetch("/games")
+  //     //return axios.post('/todos', newTodo)
+  //   },
+  // })
 
 
   const { register, handleSubmit,reset, formState:{errors} } = useForm({
