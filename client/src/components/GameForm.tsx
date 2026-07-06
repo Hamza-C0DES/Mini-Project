@@ -2,22 +2,27 @@ import { IonButton, IonInput } from '@ionic/react';
 import { useForm } from "react-hook-form";
 import {
   useMutation,
-  useQuery,
   useQueryClient
 } from '@tanstack/react-query'
+import { useState } from 'react';
+
 
 const GameForm =()=>{
-  const queryClient = useQueryClient();
+  const [userName, setName] = useState('');
+  const [roomCode, setRoom] = useState('');
+  //const queryClient = useQueryClient();
   
   const { register, handleSubmit,reset, formState:{errors} } = useForm({
     defaultValues:{
-      roomCode:'1',
-      username: "johndoe",
-      celebName: "johndoe"
+      roomCode:roomCode,
+      username: userName,
+      celebName: ""
     }
   });
   
   const onSubmit = async (data: any) =>{
+      setName(data.username)
+      setRoom(data.roomCode)
       const res = await mutation.mutateAsync(data);
       console.log(res);
       return res;
@@ -41,8 +46,6 @@ const GameForm =()=>{
     },
   })
 
-  // const [userName, setName] = useState('');
-    // const [roomCode, setRoom] = useState('');
     return<>
     <form onSubmit={handleSubmit(onSubmit)}>
           <IonInput 

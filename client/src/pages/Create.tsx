@@ -11,15 +11,14 @@ const Create: React.FC = ()=>{
         <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Celebrity Name Chain</IonTitle>
+          <IonTitle>Make a New Game!</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <h1>test</h1>
+        
       </IonContent>
     </IonPage>
     );
-    
 };
 
 export default Create;
