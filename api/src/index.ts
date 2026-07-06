@@ -44,8 +44,9 @@ app.get("/", (req, res) => {
   console.log("Hello World") 
 })
 
-app.post("/game", (req, res) => {
+app.post("/submit", async (req, res) => {
+    // using async to allow the process to run in the background instead of stalling the whole application //
     const {roomCode, username, celebrity} = req.body;
-    console.log(roomCode, username, celebrity);
-    res.status(201).json({roomCode, username, celebrity});
+    console.log(roomCode, username, celebrity); // essentially running a smoke test to see what information we receive //
+    res.status(201).json({roomCode, username, celebrity}); // will return a status code & roomCode, username, celebrity //
 })
