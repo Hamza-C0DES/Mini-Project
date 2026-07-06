@@ -16,7 +16,6 @@ datasource db {
 
 // Working On Schema //
 
-
 // TODO: add your models below (for example, a Game and its Answers).
 
 model Game {
