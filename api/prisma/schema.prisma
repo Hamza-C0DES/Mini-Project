@@ -21,7 +21,7 @@ datasource db {
 
 model Game {
   id Int  @id @default(autoincrement())
-  roomcode String
+  roomcode String @unique
   celebrity String
   celebrities Answers[]
 }
