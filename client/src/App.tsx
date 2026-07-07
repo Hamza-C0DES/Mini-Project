@@ -1,7 +1,8 @@
 import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
+import { IonApp, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
+import Create from './pages/Create';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -38,14 +39,27 @@ setupIonicReact();
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
+      <IonTabs>
       <IonRouterOutlet>
         <Route exact path="/home">
           <Home />
         </Route>
         <Route exact path="/">
-          <Redirect to="/home" />
+          <Redirect to="/home"/>
+        </Route>
+        <Route exact path='/new'>
+        <Create />
         </Route>
       </IonRouterOutlet>
+      <IonTabBar slot="bottom">
+          <IonTabButton tab="play" href="/home">
+            <IonLabel>Play!</IonLabel>
+          </IonTabButton>
+          <IonTabButton tab="newGame" href="/new">
+            <IonLabel>New Game!</IonLabel>
+          </IonTabButton>
+        </IonTabBar>
+      </IonTabs>
     </IonReactRouter>
   </IonApp>
 );
