@@ -38,7 +38,12 @@ app.get("/games", async (req, res)=>{
   res.json(await prisma.game.findMany());
 });
 
-app.get("/games/:roomCode", async (req, res)=>{})
+app.get("/games/:roomcode", async (req, res)=>{
+  const {roomcode} = req.params;
+  res.json(await prisma.game.findUnique({
+    where: { roomcode: roomcode }
+  }))
+})
 
 app.get("/", (req, res) => {
   res.send("Hello World");
@@ -85,13 +90,22 @@ app.post("/answer", async (req, res) => {
     }
 
     try{
-      //query prisma in here to insert into the db
+      //deconstruct the request body to get the roomcode, username, and celebrity name
       const argument: any = {data: {
         roomcode: roomcode,
         username: username,
         celebrity: celebrity
 
       }};
+      //query the prisma client to check data and perform 
+      // answer normalization and answer validation
+
+      //i.e. check the prisma.game table to see if there are any
+      // existing entries with the same roomcode
+      //if there are we check the celebrity name passed by the user 
+      //against the celebrity name the 
+
+      //query prisma in here to insert into the db
       const game = await prisma.game.create(argument)
     } catch (error:any) {
       console.error(error);
