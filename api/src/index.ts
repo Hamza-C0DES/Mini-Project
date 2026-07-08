@@ -45,6 +45,36 @@ app.get("/", (req, res) => {
   console.log("Hello World") 
 })
 
+
+
+app.post("/game", async (req, res) => {
+    const {roomcode, username, celebrity} = req.body;
+    console.log(roomcode, username, celebrity);
+
+    //use prisma to insert into the db
+    if(!roomcode || !celebrity){
+      return res.status(400).json({error: "Missing required fields, make sure to provide a room code, username, and celebrity name."});
+    }
+
+    try{
+      //query prisma in here to insert into the db
+      const argument: any = {data: {
+        roomcode: roomcode,
+        celebrity: celebrity
+
+      }};
+      const game = await prisma.game.create(argument)
+    } catch (error:any) {
+      console.error(error);
+
+      if (error.code === "P2002") {
+      return res.status(409).json({ error: "Room code already exists" });
+      }
+      res.status(500).json({ error: "Could not create game" });
+    }
+    res.status(201).json({roomcode, username, celebrity});
+})
+
 app.post("/answer", async (req, res) => {
     const {roomcode, username, celebrity} = req.body;
     console.log(roomcode, username, celebrity);
