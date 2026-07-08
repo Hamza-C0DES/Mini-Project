@@ -1,7 +1,15 @@
 import "dotenv/config";
 import express from "express";
-
+import cors from "cors"
 const app = express();
+
+import { PrismaClient } from './generated/prisma/client.js'; // Issues Fixed //
+import { PrismaPg } from '@prisma/adapter-pg';
+
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
+const prisma = new PrismaClient({ adapter })
+
+app.use(cors())
 app.use(express.json());
 
 const PORT = process.env.PORT ?? 3000;
@@ -21,11 +29,40 @@ app.get("/health", (_req, res) => {
 // See this API's README ("Using Prisma in code") for the exact db.ts snippet.
 
 app.listen(PORT, () => {
+  console.log("Server Live!")
   console.log(`API listening on http://localhost:${PORT}`);
 });
 
-app.post("/game/", (req, res) => {
-    const {roomCode, celebrity} = req.body;
-    console.log(roomCode, celebrity);
-    res.status(201).json({roomCode, celebrity});
+app.get("/games", async (req, res)=>{
+  // const games = await prisma.game.findMany() //
+  res.json(await prisma.game.findMany());
+});
+
+app.get("/", (req, res) => {
+  res.send("Hello World");
+  console.log("Hello World") 
+})
+
+app.post("/submit", async (req, res) => { // async allows us to use await for non-blocking database or network operations inside this route //
+    const {roomCode, username, celebrity} = req.body; // extracting values from the request body and assigning them to new local variables //
+    console.log(roomCode, username, celebrity); // essentially running a smoke test to see what information we receive //
+    // res.status(201).json({roomCode, username, celebrity}); // will return a status code & roomCode, username, celebrity //
+    // grabbing the latest entry //
+    if (!roomCode || !username || !celebrity) // we are checking to see if the client has submitted all requirements //
+      {console.log("Client Has Not Satisfied Requirement/s"); // smoke test //
+      return res.status(400).json({error: "Unsatisfied Requirements"});} // returning the status and memo addressing the issue to the client/frontend //
+
+    const lastEntry = await prisma.entry.findFirst({ 
+      // lastEntry - we are creating a new variable to store the latest-Entry //
+      // await - we simply wait for a response from the database //
+      // prisma - allows us to interact with our database via ts/js code which it then translates into sql syntax //
+      where: { roomCode }, // essentially selecting where the roomCode matches //
+      orderBy: { createdAt: 'desc' }, // order will be going from latest to oldest //
+    }); 
+    if (lastEntry) { // using an if condition to validate the input by the client //
+      const lastName = lastEntry.celebrity.trim().split(" ").pop()
+      // the lastName variable points to the lastEntry, we take the celebrity value, trim any spaces in the front ... //
+      // and/or back  
+
+    }
 })

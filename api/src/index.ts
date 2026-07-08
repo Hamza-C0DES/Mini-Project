@@ -44,11 +44,11 @@ app.get("/", (req, res) => {
 })
 
 app.post("/submit", async (req, res) => { // async allows us to use await for non-blocking database or network operations inside this route //
-    const {roomCode, username, celebrity} = req.body; // extracting values from the request body and assigning them to new local variables //
-    console.log(roomCode, username, celebrity); // essentially running a smoke test to see what information we receive //
+    const {roomcode, username, celebrity} = req.body; // extracting values from the request body and assigning them to new local variables //
+    console.log(roomcode, username, celebrity); // essentially running a smoke test to see what information we receive //
     // res.status(201).json({roomCode, username, celebrity}); // will return a status code & roomCode, username, celebrity //
     // grabbing the latest entry //
-    if (!roomCode || !username || !celebrity) // we are checking to see if the client has submitted all requirements //
+    if (!roomcode || !username || !celebrity) // we are checking to see if the client has submitted all requirements //
       {console.log("Client Has Not Satisfied Requirement/s"); // smoke test //
       return res.status(400).json({error: "Unsatisfied Requirements"});} // returning the status and memo addressing the issue to the client/frontend //
 
@@ -56,7 +56,7 @@ app.post("/submit", async (req, res) => { // async allows us to use await for no
       // lastEntry - we are creating a new variable to store the latest-Entry //
       // await - we simply wait for a response from the database //
       // prisma - allows us to interact with our database via ts/js code which it then translates into sql syntax //
-      where: { roomCode }, // essentially selecting where the roomCode matches //
+      where: { roomcode }, // essentially selecting where the roomCode matches //
       orderBy: { createdAt: 'desc' }, // order will be going from latest to oldest //
     }); 
     if (lastEntry) { // using an if condition to validate the input by the client //
