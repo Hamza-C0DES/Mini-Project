@@ -1,6 +1,6 @@
 import "dotenv/config";
 import express from "express";
-import cors from "express"
+import cors from "cors"
 const app = express();
 
 import { PrismaClient } from './generated/prisma/client.js'; // Having Issues Here* //
@@ -52,11 +52,11 @@ app.post("/submit", async (req, res) => { // async allows us to use await for no
       {console.log("Client Has Not Satisfied Requirement/s"); // smoke test //
       return res.status(400).json({error: "Unsatisfied Requirements"});} // returning the status and memo addressing the issue to the client/frontend //
 
-    const lastEntry = await prisma.entry.findFirst({ 
-      // lastEntry - we are creating a new variable to store the latest-Entry //
-      // await - we simply wait for a response from the database //
-      // prisma - allows us to interact with our database via ts/js code which it then translates into sql syntax //
-      where: { roomCode }, // essentially selecting where the roomCode matches //
-      orderBy: { createdAt: 'desc' }, // order will be going from latest to oldest //
-    }); 
+    // const lastEntry = await prisma.entry.findFirst({ 
+    //   // lastEntry - we are creating a new variable to store the latest-Entry //
+    //   // await - we simply wait for a response from the database //
+    //   // prisma - allows us to interact with our database via ts/js code which it then translates into sql syntax //
+    //   where: { roomCode }, // essentially selecting where the roomCode matches //
+    //   orderBy: { createdAt: 'desc' }, // order will be going from latest to oldest //
+    // }); 
 })

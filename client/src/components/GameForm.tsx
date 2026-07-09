@@ -12,7 +12,7 @@ const GameForm =()=>{
   const [roomCode, setRoom] = useState('');
   //const queryClient = useQueryClient();
   
-  const { register, handleSubmit,reset, formState:{errors} } = useForm({
+  const { register, handleSubmit,reset, formState:{errors}, watch } = useForm({
     defaultValues:{
       roomCode:roomCode,
       username: userName,
@@ -23,6 +23,13 @@ const GameForm =()=>{
   const onSubmit = async (data: any) =>{
       setName(data.username)
       setRoom(data.roomCode)
+      console.log(roomCode)
+      console.log(userName)
+      reset({
+        roomCode: roomCode,
+        username: userName,
+        celebName: ""
+      })
       const res = await mutation.mutateAsync(data);
       console.log(res);
       return res;
@@ -31,7 +38,7 @@ const GameForm =()=>{
   const mutation = useMutation({
   mutationFn: async (data: any)=>{
 
-      const res = await fetch("http://localhost:3000/game",{
+      const res = await fetch("http://localhost:3000/submit",{
       method: 'POST',
       headers: {
       'Content-Type': 'application/json'
