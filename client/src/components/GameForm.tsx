@@ -1,16 +1,12 @@
 import { IonButton, IonInput } from '@ionic/react';
 import { useForm } from "react-hook-form";
-import {
-  useMutation,
-  useQueryClient
-} from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react';
 
 
 const GameForm =()=>{
   const [userName, setName] = useState('');
   const [roomCode, setRoom] = useState('');
-  //const queryClient = useQueryClient();
   
   const { register, handleSubmit,reset, formState:{errors}, watch } = useForm({
     defaultValues:{
@@ -58,7 +54,6 @@ const GameForm =()=>{
           <IonInput 
           label="Room Code:" 
           {...register("roomcode", {required: "Please enter a room code."})}
-          type='number'
           fill='outline'
           />
           <p>{errors.roomcode?.message}</p>
